@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"regexp"
 
 	"github.com/cbroglie/mustache"
@@ -14,11 +13,28 @@ import (
 func renderTemplate(template *mustache.Template) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		framework := tal.New("node_modules/tal/config")
-		// TODO: read queries from request
-		deviceConfigRaw, err := framework.GetConfigurationFromFilesystem("default-webkit-default", "/devices")
+
+		var deviceBrand, deviceModel string
+
+		brand, ok1 := r.URL.Query()["brand"]
+		if !ok1 || len(brand) < 1 {
+			deviceBrand = "default"
+		} else {
+			deviceBrand = brand[0]
+		}
+
+		model, ok2 := r.URL.Query()["model"]
+		if !ok2 || len(model) < 1 {
+			deviceModel = "webkit"
+		} else {
+			deviceModel = model[0]
+		}
+
+		deviceConfigRaw, err := framework.GetConfigurationFromFilesystem(deviceBrand+"-"+deviceModel+"-default", "/devices")
+
 		if err != nil {
 			fmt.Println(err.Error())
-			os.Exit(1)
+			deviceConfigRaw, _ = framework.GetConfigurationFromFilesystem("default-webkit-default", "/devices")
 		}
 
 		appID := "sampleapp"
