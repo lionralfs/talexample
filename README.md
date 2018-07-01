@@ -1,23 +1,19 @@
-# Example TAL Application
+# Example TAL Application (but in Go)
 
 An example TV application using the [TAL](https://www.github.com/bbc/tal) framework from the BBC.
-
-<img src="./assets/main.png" width="500">
-
-<img src="./assets/carousel.png" width="500">
-
-<img src="./assets/playback.png" width="500">
 
 # Getting Started
 
 ```
-git clone git@github.com:bbc/talexample.git
+git clone git@github.com:lionralfs/talexample.git
 cd talexample
 npm install
-npm start
+go run main.go
 ```
 
-Visit http://localhost:1337 in your browser. Use the UP, DOWN, LEFT, RIGHT keys to navigate, use ENTER/RETURN to select.
+> Note: `npm install` is still necessary to install the js-scripts running in the browser and to get the device configs
+
+Visit http://localhost:8080 in your browser. Use the UP, DOWN, LEFT, RIGHT keys to navigate, use ENTER/RETURN to select.
 
 # More Information
 
